@@ -49,7 +49,7 @@ Route::get('reporte/bfecha', 'ReporteController@bfecha')->name('reporte.busqueda
 
 #Mantenedor
 Route::resource('mantenedorusuario', 'MantenedorusuarioController')->middleware('auth');
-Route::resource('registrousuario', 'registrousuarioController')->middleware('auth');
+Route::resource('registrousuario', 'RegistrousuarioController')->middleware('auth');
 Route::resource('registroimpresora', 'RegistroimpresoraController')->middleware('auth');
 
 #Archivos
