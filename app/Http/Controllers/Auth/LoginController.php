@@ -67,7 +67,7 @@ class LoginController extends Controller
 
                 }
 
-                return back()->withInput()->withErrors(['email'=>'El Usuario o Contraseña son Incorrectos']);
+                return back()->withInput()->withErrors(['email'=>'El Usuario, Iniciales o Contraseña son Incorrectos']);
 
 
             }else{
