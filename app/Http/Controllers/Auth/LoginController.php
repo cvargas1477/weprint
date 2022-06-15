@@ -43,6 +43,8 @@ class LoginController extends Controller
 
     public function login(){
 
+        
+        $iniciales = request('iniciales');
         $email = request('email');
 
         $user            = User::where('email',$email)->first();
@@ -54,6 +56,7 @@ class LoginController extends Controller
                 $credentials = $this->validate(request(),[
 
                     'email'=> 'required|string',
+                    'iniciales'=> 'required|string',
                     'password'=> 'required|string'
 
                 ]);

@@ -12,6 +12,20 @@
                         @csrf
 
                         <div class="form-group row">
+                            <label for="iniciales" class="col-md-4 col-form-label text-md-right">{{ __('Iniciales') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="iniciales" type="text" class="form-control @error('iniciales') is-invalid @enderror" name="iniciales" value="{{ old('iniciales') }}" required autocomplete="iniciales" autofocus>
+
+                                @error('iniciales')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
                             <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail') }}</label>
 
                             <div class="col-md-6">
@@ -59,7 +73,7 @@
 
                                 @if (Route::has('password.request'))
                                     <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        {{ __('Forgot Your Password?') }}
+                                        {{ __('Olvidaste tu Password?') }}
                                     </a>
                                 @endif
                             </div>
