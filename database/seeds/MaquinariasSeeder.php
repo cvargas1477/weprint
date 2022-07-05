@@ -14,13 +14,13 @@ class MaquinariasSeeder extends Seeder
     {
          $data = [
             [
-                'maquina' => 'Impresora blanca',
+                'maquina' => 'Mimaki',
             ],
              [
-                'maquina' => 'Impresora negra',
+                'maquina' => 'Roland Blanca',
             ],
              [
-                'maquina' => 'Impresora roja',
+                'maquina' => 'Roland Roja',
             ],
              
           
