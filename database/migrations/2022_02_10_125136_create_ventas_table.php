@@ -17,6 +17,8 @@ class CreateVentasTable extends Migration
             $table->id();
             $table->decimal('numero');
             $table->string('norden');
+            $table->string('linkcotizacion')->nullable();
+            $table->string('ncotizacion');
             $table->unsignedBigInteger('users_id');
             $table->foreign('users_id')->references('id')->on('users');
             $table->unsignedBigInteger('clientes_id');
@@ -25,7 +27,7 @@ class CreateVentasTable extends Migration
             $table->string('cantidad');
             $table->string('forma');
             $table->string('terminaciones');
-            $table->string('linkarchivocliente')->nullable();;
+            $table->string('linkarchivocliente')->nullable();
             $table->string('material');
             $table->date('fechaingreso');
             $table->date('fechaentrega');            

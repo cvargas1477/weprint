@@ -237,44 +237,44 @@
 
 });
 
-//Cargar modal EDIT
-$(document).on('click','.btn-edit',function(){
+		//Cargar modal EDIT
+		$(document).on('click','.btn-edit',function(){
 
-	$('#agregar')[0].reset();
-	$('.id').val('');
-	id = $(this).data('id');
+			$('#agregar')[0].reset();
+			$('.id').val('');
+			id = $(this).data('id');
 
-	url = '{{ route('cliente.edit',':id' ) }}';
-	url = url.replace(':id', id);
+			url = '{{ route('cliente.edit',':id' ) }}';
+			url = url.replace(':id', id);
 
-	$.ajax({
+			$.ajax({
 
-		url:url,
-		type:'GET',
-		data:{},
-		dataType:'JSON',
-		success:function(data){
+				url:url,
+				type:'GET',
+				data:{},
+				dataType:'JSON',
+				success:function(data){
 
-			$('.id').val(data.id);
-			$('.rut').val(data.rut);
-			$('.razonsocial').val(data.razonsocial);
-			$('.contacto').val(data.contacto);
-			$('.celular').val(data.celular);
-			$('.email').val(data.email);
-			$('.direccion').val(data.direccion);
-			$('.observacion').val(data.observacion);
+					$('.id').val(data.id);
+					$('.rut').val(data.rut);
+					$('.razonsocial').val(data.razonsocial);
+					$('.contacto').val(data.contacto);
+					$('.celular').val(data.celular);
+					$('.email').val(data.email);
+					$('.direccion').val(data.direccion);
+					$('.observacion').val(data.observacion);
 
-		}
-
-
-	});
+				}
 
 
-	$('.modal-title').html('Actualizar Cliente');
-	$('.btn-submit').html('Actualizar');
-	$('#modal-agregar').modal('show');
+			});
 
-});
+
+			$('.modal-title').html('Actualizar Cliente');
+			$('.btn-submit').html('Actualizar');
+			$('#modal-agregar').modal('show');
+
+		});
 
 
 //Cargar Modal Eliminar

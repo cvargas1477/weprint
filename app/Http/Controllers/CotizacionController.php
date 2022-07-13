@@ -101,7 +101,58 @@ class CotizacionController extends Controller
      */
     public function store(Request $request)
     {
-        
+        //si viene para actualizar la orden realizar esta accion, de lo contrario pase al siguiente nivel
+           if(isset($request->id)) {
+            if($request->estados_id >= 6){
+
+                return array(
+                    'title' => 'No se puede EDITAR',            
+                    'text'  => 'Pedido se encuentra en Taller o Finalizado',
+                    'icon'  => 'error'
+                     );
+
+
+            };
+
+                $norden = $request->norden;
+
+                Cotizacion::updateOrCreate(
+
+                    ['id'=>$request->id],
+
+                    [                        
+                        
+                        'norden'                => $request->norden,
+                        'ncotizacion'           => $request->ncotizacion,
+                        'linkcotizacion'        => $request->linkcotizacion,
+                        'clientes_id'           => $request->clientes_id,
+                        'tamano'                => $request->tamano,
+                        'cantidad'              => $request->cantidad,
+                        'forma'                 => $request->forma,
+                        'terminaciones'         => $request->terminaciones,
+                        'material'              => $request->material,
+                        'linkarchivocliente'    => $request->linkarchivocliente,
+                        'fechaingreso'          => $request->fechaingreso,
+                        'fechaentrega'          => $request->fechaentrega,
+                        'observacion'           => $request->observacion,                
+                        'estados_id'            => $request->estados_id,
+                        'instalacion'           => $request->instalacion
+
+                    ]);
+                    
+                    
+                    $text = (isset($request->id)) ? 'Orden de trabajo actualizado' : 'Orden de trabajo agregado';   
+            
+                
+                    return array(
+                    'title' => 'N° Orden'.' '.$norden,            
+                    'text'  => $text,
+                    'icon'  => 'success'
+                     );
+
+            };
+
+
             $numero=0;
             $ano=2022;
             $user = Auth::user();
@@ -122,13 +173,7 @@ class CotizacionController extends Controller
            $users_id = $user['id'];
            
 
-        try{
-
-        //Obtener datos del archivo
-          //  $file  = $request->file('archivocliente');
-          //  $iniciales = $user['iniciales'];            
-          //  $archivocliente = $request->file('archivocliente')->getClientOriginalName();
-          //  $archivocliente = $numero.'-'.$ano.' '.$archivocliente;
+        try{       
 
            Cotizacion::updateOrCreate(
             ['id'=>$request->id],
@@ -136,6 +181,8 @@ class CotizacionController extends Controller
             [
                 'numero'                => $numero,
                 'norden'                => $norden,
+                'ncotizacion'           => $request->ncotizacion,
+                'linkcotizacion'        => $request->linkcotizacion,
                 'users_id'              => $users_id,
                 'clientes_id'           => $request->clientes_id,
                 'tamano'                => $request->tamano,
@@ -144,16 +191,14 @@ class CotizacionController extends Controller
                 'terminaciones'         => $request->terminaciones,
                 'material'              => $request->material,
                 'linkarchivocliente'    => $request->linkarchivocliente,
-                'fechaingreso'          => now(),
+                'fechaingreso'          => $request->fechaingreso,
                 'fechaentrega'          => $request->fechaentrega,
                 'observacion'           => $request->observacion,                
                 'estados_id'            => 1,
                 'instalacion'           => $request->instalacion
 
             ]);
-
-            //Guardar archivo
-            //Storage::disk('public')->putFileAs('archivocliente', $file , $archivocliente);
+            
             
             $text = (isset($request->id)) ? 'Orden de trabajo actualizado' : 'Orden de trabajo agregado';   
     
@@ -194,6 +239,8 @@ class CotizacionController extends Controller
                ->select(
                     'ventas.id',
                     'numero',
+                    'ncotizacion',
+                    'linkcotizacion',
                     'norden',
                     'razonsocial',
                     'contacto',
@@ -230,7 +277,9 @@ class CotizacionController extends Controller
      */
     public function edit($id)
     {
-        //
+        $result = Cotizacion::where('id',$id)->first();
+
+        return $result;
     }
 
     /**

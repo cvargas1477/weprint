@@ -34,8 +34,8 @@
  						<tr> 							
  							<th>N° OT</th>
  							<th>Estado pedido </th>
- 							<th>Razón social</th>
- 							<th>Contactos</th>
+ 							<th>N° Cotización </th>
+ 							<th>Link Cotización </th> 							
  							<th>Tamaño</th>
  							<th>Cantidad </th>
  							<th>Forma </th>
@@ -46,7 +46,8 @@
  							<th>Vendedor </th>
  							<th>Fecha cotización </th>
  							<th>Fecha entrega </th> 														
- 							<th>Observación </th> 
+ 							<th>Observación </th>
+ 							<th>Acciones </th> 
  							 						
  						</tr>
  						
@@ -82,8 +83,21 @@
 
 	      		<input type="hidden" name="id" class="id"> 
 	      		<input type="hidden" name="clientes_id" class="cliente_id" value="{{$id}}">
+	      		<input type="hidden" name="norden" class="norden">
+	      		<input type="hidden" name="estados_id" class="estados_id">  
 	      		
-
+	      		 <div class="form-group">
+		        	<label>N° Cotización</label>
+		        	<input type="text" name="ncotizacion" class="ncotizacion form-control" required>
+		        </div>
+		        <div class="form-group">
+		        	<label>Fecha cotización</label>
+		        	<input type="date" name="fechaingreso" class="fechaingreso form-control" required>
+		        </div>
+		        <div class="form-group">
+		        	<label>Link cotización</label>
+		        	<input type="text" name="linkcotizacion" class="linkcotizacion form-control" required>
+		        </div>
 		        <div class="form-group">
 		        	<label>Tamaño</label>
 		        	<input type="text" name="tamano" class="tamano form-control" required>
@@ -118,7 +132,7 @@
 		        	<input type="date" name="fechaentrega" class="fechaentrega form-control" required>
 		        </div>
 		        <div class="form-group">
-		        	<label>Observación</label>
+		        	<label>Condición de pago</label>
 		        	<input type="text" name="observacion" class="observacion form-control">
 		        </div>        
 
@@ -161,7 +175,8 @@
 						{data:'contacto'},
 						{data:'email'},
 						{data:'celular'},
-						{data:'direccion'}
+						{data:'direccion'},
+
 					]
 				});
 			}
@@ -190,8 +205,15 @@
 					columns:[
 							{data:'norden'},
 							{data:'detalle'},
-							{data:'razonsocial'},
-							{data:'contacto'},
+							{data:'ncotizacion'},
+							{data:null,render:function(data){
+								return`
+								
+								<a href="${data.linkcotizacion}" class="btn btn-primary btn-sm btn-archivo"  target="_blank"><i class="fa fa-link"></i></a>
+
+
+								`;
+							}},							
 							{data:'tamano'},
 							{data:'cantidad'},
 							{data:'forma'},
@@ -209,13 +231,13 @@
 							{data:'name'},
 							{data:'fechaingreso'},
 							{data:'fechaentrega'},				
-							{data:'observacion'}				
-							//{data:null,render:function(data){
-							//	return`
-							//		<button data-id="${data.id}" type="button" class="btn btn-primary btn-sm btn-edit"><i //class="fa fa-pencil"></i></button>
-							//		<button data-id="${data.id}" type="button" class="btn btn-danger btn-sm btn-delete"><i //class="fa fa-trash"></i></button>
-							//	`;
-							//}}
+							{data:'observacion'},				
+							{data:null,render:function(data){
+							return`
+									<button data-id="${data.id}" type="button" class="btn btn-primary btn-sm btn-edit"><i class="fa fa-pencil"></i></button>
+								
+								`;
+							}}
 					]
 				});
 			}
@@ -289,6 +311,53 @@
 
 
 		});
+
+	//Cargar modal EDIT
+	$(document).on('click','.btn-edit',function(){
+
+	$('#agregar')[0].reset();
+	$('.id').val('');
+	id = $(this).data('id');
+
+	url = '{{ route('cotizacion.edit',':id' ) }}';
+	url = url.replace(':id', id);
+
+	$.ajax({
+
+		url:url,
+		type:'GET',
+		data:{},
+		dataType:'JSON',
+		success:function(data){
+
+			$('.id').val(data.id);
+			$('.estados_id').val(data.estados_id);
+			$('.norden').val(data.norden);
+			$('.ncotizacion').val(data.ncotizacion);
+			$('.linkcotizacion').val(data.linkcotizacion);
+			$('.tamano').val(data.tamano);
+			$('.cantidad').val(data.cantidad);
+			$('.forma').val(data.forma);
+			$('.terminaciones').val(data.terminaciones);
+			$('.linkarchivocliente').val(data.linkarchivocliente);
+			$('.material').val(data.material);
+			$('.instalacion').val(data.instalacion);
+			$('.observacion').val(data.observacion);
+			$('.fechaingreso').val(data.fechaingreso);
+			$('.fechaentrega').val(data.fechaentrega);
+
+
+		}
+
+
+	});
+
+
+	$('.modal-title').html('Modificar orden');
+	$('.btn-submit').html('Actualizar');
+	$('#modal-agregar').modal('show');
+
+});
 
 	</script>
 @endsection
