@@ -11,8 +11,7 @@ use App\Taller;
 use App\Maquinaria;
 use DB;
 use Auth;
-
-class TallerController extends Controller
+class TerminacionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -32,9 +31,7 @@ class TallerController extends Controller
              ->join('users', 'users.id', '=', 'ventas.users_id')
              ->join('disenos', 'disenos.ventas_id', '=', 'ventas.id')
              ->join('clientes', 'clientes.id', '=', 'ventas.clientes_id') 
-             ->where('estados_id', 5)
-             ->orwhere('estados_id', 7)
-             ->orwhere('estados_id', 8)
+             ->where('estados_id', 8)             
              ->orwhere('estados_id', 9) 
              ->orwhere('estados_id', 10)                     
              ->select(
@@ -74,7 +71,7 @@ class TallerController extends Controller
 
         $result2 = Maquinaria::select('maquina')->get(); 
 
-           return view('taller.index')->with(compact('result2'));;
+           return view('taller.terminacion.index')->with(compact('result2'));;
 
         } catch(Exception $e) {
 
@@ -120,7 +117,7 @@ class TallerController extends Controller
 
             }      
 
-           return view('taller.index');
+           return view('taller.terminacion.index');
 
         } catch(Exception $e) {
 

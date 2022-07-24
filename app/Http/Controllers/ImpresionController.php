@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Cotizacion;
@@ -12,7 +13,7 @@ use App\Maquinaria;
 use DB;
 use Auth;
 
-class TallerController extends Controller
+class ImpresionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -32,11 +33,8 @@ class TallerController extends Controller
              ->join('users', 'users.id', '=', 'ventas.users_id')
              ->join('disenos', 'disenos.ventas_id', '=', 'ventas.id')
              ->join('clientes', 'clientes.id', '=', 'ventas.clientes_id') 
-             ->where('estados_id', 5)
-             ->orwhere('estados_id', 7)
-             ->orwhere('estados_id', 8)
-             ->orwhere('estados_id', 9) 
-             ->orwhere('estados_id', 10)                     
+             ->where('estados_id', 7)
+                                 
              ->select(
                     'ventas.id as ventasid',
                     'ventas_id',
@@ -74,7 +72,7 @@ class TallerController extends Controller
 
         $result2 = Maquinaria::select('maquina')->get(); 
 
-           return view('taller.index')->with(compact('result2'));;
+           return view('taller.impresion.index')->with(compact('result2'));;
 
         } catch(Exception $e) {
 
@@ -120,7 +118,7 @@ class TallerController extends Controller
 
             }      
 
-           return view('taller.index');
+           return view('taller.impresion.index');
 
         } catch(Exception $e) {
 
@@ -246,8 +244,7 @@ class TallerController extends Controller
                     'ventas.norden',        
                     'users.name',
                     'detalle',
-                    'maquinaria',                    
-                    //'DATE_FORMAT(created_at,'%d/%m/%Y')fechaingreso'
+                    'maquinaria', 
                     'fechamovimiento'              
 
              )             

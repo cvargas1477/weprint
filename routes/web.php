@@ -38,6 +38,9 @@ Route::resource('archivodiseno', 'ArchivodisenoController')->middleware('auth');
 
 #Taller
 Route::resource('taller', 'TallerController')->middleware('auth');
+Route::resource('aceptadocliente', 'AceptadoclienteController')->middleware('auth');
+Route::resource('impresion', 'ImpresionController')->middleware('auth');
+Route::resource('terminacion', 'TerminacionController')->middleware('auth');
 Route::resource('finalizarpedido', 'FinalizarpedidoController')->middleware('auth');
 
 #Pedidos

@@ -39,8 +39,16 @@
             <li class="nav-item dropdown">
                 @hasrole('taller|supervisor|administrador')
                  <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown">Taller</a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                     <a class="dropdown-item" href="{{ route('taller.index') }}">Producción en taller</a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">                     
+                     
+                        <a class="dropdown-item" href="{{ route('aceptadocliente.index') }}">Aceptado por cliente</a>
+
+                        <a class="dropdown-item" href="{{ route('impresion.index') }}">Impresión</a>
+
+                        <a class="dropdown-item" href="{{ route('terminacion.index') }}">Terminación</a>
+
+
+                    
                      @hasrole('supervisor|administrador')
                      <a class="dropdown-item" href="{{ route('finalizarpedido.index')}}">Finalizar trabajos</a>
                      @endhasrole
