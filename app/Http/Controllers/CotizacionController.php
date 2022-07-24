@@ -47,26 +47,22 @@ class CotizacionController extends Controller
                 'cantidad',
                 'forma',
                 'terminaciones',
-                'material',                    
-                //'DATE_FORMAT(fechaingreso,'%d/%m/%Y')fechaingreso',
-                //'DATE_FORMAT(fechaentrega,'%d/%m/%Y')fechaentrega',
+                'material',
                 'fechaingreso',
                 'fechaentrega',
                 'observacion',
                 'estados_id',
                 'instalacion'                    
 
-                )->get();                
-                
-
-             // DATE_FORMAT(start_date, '%d%m%Y')start_date   ...para dar forma a las fecha, esto se pone en la parte interna del $result//
+            )->get(); 
 
                 return array('data'=>$result);
                 
 
-            }
+            }           
 
             return view('cotizaciones.index');
+
 
         } catch(Exception $e) {
 
@@ -101,7 +97,7 @@ class CotizacionController extends Controller
      */
     public function store(Request $request)
     {
-        //si viene para actualizar la orden realizar esta accion, de lo contrario pase al siguiente nivel
+        //si viene para actualizar la orden realizar esta acción, de lo contrario pase al siguiente nivel
            if(isset($request->id)) {
             if($request->estados_id >= 6){
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Cliente;
+use App\User;
 use DB;
 use Auth;
 
@@ -25,6 +26,7 @@ class ClienteController extends Controller
             $result = Cliente::select(DB::raw("
 
                     id,
+                    vendedor_asignado,
                     rut,
                     razonsocial,
                     contacto,
@@ -42,7 +44,9 @@ class ClienteController extends Controller
 
             }
 
-            return view('clientes.index');
+            $result2 = User::role('vendedor')->get();
+
+            return view('clientes.index')->with(compact('result2'));
 
         } catch(Exception $e) {
 
@@ -87,14 +91,15 @@ class ClienteController extends Controller
             ['id'=>$request->id],
 
             [
-                'rut'               => $request->rut,
-                'razonsocial'       => $request->razonsocial,    
-                'contacto'          => $request->contacto,
-                'celular'           => $request->celular,
-                'direccion'         => $request->direccion,
-                'email'             => $request->email,
-                'observacion'       => $request->observacion,
-                'users_id'          => $user->id
+                'vendedor_asignado'     => $request->vendedor_asignado,
+                'rut'                   => $request->rut,
+                'razonsocial'           => $request->razonsocial,    
+                'contacto'              => $request->contacto,
+                'celular'               => $request->celular,
+                'direccion'             => $request->direccion,
+                'email'                 => $request->email,
+                'observacion'           => $request->observacion,
+                'users_id'              => $user->id
 
 
          ]);

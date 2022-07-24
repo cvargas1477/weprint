@@ -56,9 +56,7 @@ class DisenoController extends Controller
                     'instalacion'
                     
 
-             )
-                         
-             ->get();    
+             )->get();    
 
                 return array('data'=>$result);
                 
@@ -66,7 +64,8 @@ class DisenoController extends Controller
             } 
 
             $result2 = User::role('disenador')->get();
-     
+
+           
 
             return view('disenos.index')->with(compact('result2'));
 

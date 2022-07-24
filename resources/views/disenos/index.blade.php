@@ -243,11 +243,9 @@ $(document).on('click','.btn-edit',function(){
 		dataType:'JSON',
 		success:function(data){
 
-			$('.id').val(data.id);	
-			
+			$('.id').val(data.id);				
 
 		}
-
 
 	});
 
@@ -258,10 +256,6 @@ $(document).on('click','.btn-edit',function(){
 		
 
 	});	
-
-
-
-
 	
 	
 </script>

@@ -36,6 +36,7 @@ class PedidoController extends Controller
                     'disenos.id as disenosid',
                     'numero',
                     'norden',
+                    'ncotizacion',
                     'nombre_disenador',                    
                     'users.name',
                     'clientes_id',

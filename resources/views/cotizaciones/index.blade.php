@@ -13,6 +13,7 @@
  						<tr> 							
  							<th>Rut</th>
  							<th>Razón social</th>
+ 							<th>Vendedor</th>
  							<th>Contacto</th>
  							<th>Email</th>
  							<th>Celular</th>
@@ -32,7 +33,7 @@
  				<table class="table" id="consulta">
  					<thead>
  						<tr> 							
- 							<th>N° OT</th>
+ 							<th>N° OT</th> 							
  							<th>Estado pedido </th>
  							<th>N° Cotización </th>
  							<th>Link Cotización </th> 							
@@ -90,6 +91,7 @@
 		        	<label>N° Cotización</label>
 		        	<input type="text" name="ncotizacion" class="ncotizacion form-control" required>
 		        </div>
+		        
 		        <div class="form-group">
 		        	<label>Fecha cotización</label>
 		        	<input type="date" name="fechaingreso" class="fechaingreso form-control" required>
@@ -150,212 +152,215 @@
 @endsection
 
 @section('scripts')
-	<script>
-		//traer dato del Cliente	
-			var  json = @json($cliente);
+<script>
 
-			function infoCliente(){
-				$('#consulta_info_cliente').DataTable({
-					paging:false,
-					searching:false,
-					info:false,
-					language:{
-						url:'{{ asset('js/spanish.json') }}'
-					},
-					iDisplayLength: 25,
-					deferRender: true,
-					bProcessing: true,
-					bAutoWidth: false,
-					destroy:true,
-					data:json,
-					columns:[
+
+//funcion cargar Data
+	function loadData(){		
+		$('#consulta').DataTable({
+			language:{
+				url:'{{ asset('js/spanish.json') }}'
+			},
+			iDisplayLength: 25,
+			deferRender: true,
+			bProcessing: true,
+			bAutoWidth: false,
+			destroy:true,
+			ajax:{				
+				url:'{{ route('cotizacion.show',[$id]) }}',
+				type:'GET',
+				data:{
+					
+				}
+			},
+			columns:[
+					{data:'norden'},									
+					{data:'detalle'},
+					{data:'ncotizacion'},
+					{data:null,render:function(data){
+						return`
 						
-						{data:'rut'},
-						{data:'razonsocial'},
-						{data:'contacto'},
-						{data:'email'},
-						{data:'celular'},
-						{data:'direccion'},
+						<a href="${data.linkcotizacion}" class="btn btn-primary btn-sm btn-archivo"  target="_blank"><i class="fa fa-link"></i></a>
 
-					]
-				});
-			}
-			infoCliente();
+
+						`;
+					}},							
+					{data:'tamano'},
+					{data:'cantidad'},
+					{data:'forma'},
+					{data:'terminaciones'},
+					{data:'material'},
+					{data:null,render:function(data){
+						return`
+						
+						<a href="${data.linkarchivocliente}" class="btn btn-primary btn-sm btn-archivo"  target="_blank"><i class="fa fa-link"></i></a>
+
+
+						`;
+					}},								
+					{data:'instalacion'},							
+					{data:'name'},
+					{data:'fechaingreso'},
+					{data:'fechaentrega'},				
+					{data:'observacion'},				
+					{data:null,render:function(data){
+					return`
+							<button data-id="${data.id}" type="button" class="btn btn-primary btn-sm btn-edit"><i class="fa fa-pencil"></i></button>
+						
+						`;
+					}}
+			]
+		});
+	}
+	loadData();
+
+	//traer dato del Cliente	
+	var  json = @json($cliente);
+
+	function infoCliente(){
+		$('#consulta_info_cliente').DataTable({
+			paging:false,
+			searching:false,
+			info:false,
+			language:{
+				url:'{{ asset('js/spanish.json') }}'
+			},
+			iDisplayLength: 25,
+			deferRender: true,
+			bProcessing: true,
+			bAutoWidth: false,
+			destroy:true,
+			data:json,
+			columns:[
+				
+				{data:'rut'},
+				{data:'razonsocial'},
+				{data:'vendedor_asignado'},
+				{data:'contacto'},
+				{data:'email'},
+				{data:'celular'},
+				{data:'direccion'},
+
+			]
+		});
+	}
+	infoCliente();
 
 			
 
-		//funcion cargar Data
-			function loadData(){		
-				$('#consulta').DataTable({
-					language:{
-						url:'{{ asset('js/spanish.json') }}'
-					},
-					iDisplayLength: 25,
-					deferRender: true,
-					bProcessing: true,
-					bAutoWidth: false,
-					destroy:true,
-					ajax:{				
-						url:'{{ route('cotizacion.show',[$id]) }}',
-						type:'GET',
-						data:{
-							
-						}
-					},
-					columns:[
-							{data:'norden'},
-							{data:'detalle'},
-							{data:'ncotizacion'},
-							{data:null,render:function(data){
-								return`
-								
-								<a href="${data.linkcotizacion}" class="btn btn-primary btn-sm btn-archivo"  target="_blank"><i class="fa fa-link"></i></a>
+	//Cargar Modal Agregar cotización
+	$(document).on('click','.btn-agregar',function(){
 
-
-								`;
-							}},							
-							{data:'tamano'},
-							{data:'cantidad'},
-							{data:'forma'},
-							{data:'terminaciones'},
-							{data:'material'},
-							{data:null,render:function(data){
-								return`
-								
-								<a href="${data.linkarchivocliente}" class="btn btn-primary btn-sm btn-archivo"  target="_blank"><i class="fa fa-link"></i></a>
-
-
-								`;
-							}},								
-							{data:'instalacion'},							
-							{data:'name'},
-							{data:'fechaingreso'},
-							{data:'fechaentrega'},				
-							{data:'observacion'},				
-							{data:null,render:function(data){
-							return`
-									<button data-id="${data.id}" type="button" class="btn btn-primary btn-sm btn-edit"><i class="fa fa-pencil"></i></button>
-								
-								`;
-							}}
-					]
-				});
-			}
-			loadData();
-
-			//Cargar Modal Agregar cotización
-			$(document).on('click','.btn-agregar',function(){
-
-				$('#agregar')[0].reset();
-				$('.id').val('');
-				$('.modal-title').html('Nueva orden de trabajo');
-				$('.btn-submit').html('Agregar');
-				$('#modal-agregar').modal('show');		
-
-			});
-
-			//Agregar Cotización
-			$(document).on('submit','#agregar',function(e){
-
-				//parametros = $(this).serialize();
-				parametros = new FormData(this);
-
-				$.ajax({
-
-					url:'{{ route('cotizacion.store') }}',
-					type:'POST',
-					data:parametros,
-					dataType:'JSON',
-					contentType: false,
-		      		cache: false,
-		      		processData:false,
-					beforeSend:function(){
-
-						Swal.fire({
-
-							title 	: 'Cargando',
-							text	: "Espere un momento...",					
-							showConfirmButton:false 
-
-						});				
-
-
-					},
-					success:function(data){
-
-						
-						$('#modal-agregar').modal('hide');
-						loadData();
-
-						Swal.fire({
-							title 	: data.title,
-							text	: data.text,
-							icon	: data.icon,
-							//timer	: 3000,
-							showConfirmButton:true 
-						});		
-
-
-					}
-
-				});
-
-			e.preventDefault();
-
-		});
-
-		//mostrar archivo Cliente
-		$(document).on('click','btn-archivo',function(){
-
-			asset('storage/archivocliente/');
-
-
-		});
-
-	//Cargar modal EDIT
-	$(document).on('click','.btn-edit',function(){
-
-	$('#agregar')[0].reset();
-	$('.id').val('');
-	id = $(this).data('id');
-
-	url = '{{ route('cotizacion.edit',':id' ) }}';
-	url = url.replace(':id', id);
-
-	$.ajax({
-
-		url:url,
-		type:'GET',
-		data:{},
-		dataType:'JSON',
-		success:function(data){
-
-			$('.id').val(data.id);
-			$('.estados_id').val(data.estados_id);
-			$('.norden').val(data.norden);
-			$('.ncotizacion').val(data.ncotizacion);
-			$('.linkcotizacion').val(data.linkcotizacion);
-			$('.tamano').val(data.tamano);
-			$('.cantidad').val(data.cantidad);
-			$('.forma').val(data.forma);
-			$('.terminaciones').val(data.terminaciones);
-			$('.linkarchivocliente').val(data.linkarchivocliente);
-			$('.material').val(data.material);
-			$('.instalacion').val(data.instalacion);
-			$('.observacion').val(data.observacion);
-			$('.fechaingreso').val(data.fechaingreso);
-			$('.fechaentrega').val(data.fechaentrega);
-
-
-		}
-
+		$('#agregar')[0].reset();
+		$('.id').val('');
+		$('.modal-title').html('Nueva orden de trabajo');
+		$('.btn-submit').html('Agregar');
+		$('#modal-agregar').modal('show');		
 
 	});
 
+	//Agregar Cotización
+	$(document).on('submit','#agregar',function(e){
 
-	$('.modal-title').html('Modificar orden');
-	$('.btn-submit').html('Actualizar');
-	$('#modal-agregar').modal('show');
+		//parametros = $(this).serialize();
+		parametros = new FormData(this);
+
+		$.ajax({
+
+			url:'{{ route('cotizacion.store') }}',
+			type:'POST',
+			data:parametros,
+			dataType:'JSON',
+			contentType: false,
+      		cache: false,
+      		processData:false,
+			beforeSend:function(){
+
+				Swal.fire({
+
+					title 	: 'Cargando',
+					text	: "Espere un momento...",					
+					showConfirmButton:false 
+
+				});				
+
+
+			},
+			success:function(data){
+
+				
+				$('#modal-agregar').modal('hide');
+				loadData();
+
+				Swal.fire({
+					title 	: data.title,
+					text	: data.text,
+					icon	: data.icon,
+					//timer	: 3000,
+					showConfirmButton:true 
+				});		
+
+
+			}
+
+		});
+
+	e.preventDefault();
+
+});
+
+//mostrar archivo Cliente
+$(document).on('click','btn-archivo',function(){
+
+	asset('storage/archivocliente/');
+
+
+});
+
+//Cargar modal EDIT
+$(document).on('click','.btn-edit',function(){
+
+$('#agregar')[0].reset();
+$('.id').val('');
+id = $(this).data('id');
+
+url = '{{ route('cotizacion.edit',':id' ) }}';
+url = url.replace(':id', id);
+
+$.ajax({
+
+	url:url,
+	type:'GET',
+	data:{},
+	dataType:'JSON',
+	success:function(data){
+
+		$('.id').val(data.id);
+		$('.estados_id').val(data.estados_id);
+		$('.norden').val(data.norden);
+		$('.ncotizacion').val(data.ncotizacion);
+		$('.linkcotizacion').val(data.linkcotizacion);
+		$('.tamano').val(data.tamano);
+		$('.cantidad').val(data.cantidad);
+		$('.forma').val(data.forma);
+		$('.terminaciones').val(data.terminaciones);
+		$('.linkarchivocliente').val(data.linkarchivocliente);
+		$('.material').val(data.material);
+		$('.instalacion').val(data.instalacion);
+		$('.observacion').val(data.observacion);
+		$('.fechaingreso').val(data.fechaingreso);
+		$('.fechaentrega').val(data.fechaentrega);
+
+
+	}
+
+
+});
+
+
+$('.modal-title').html('Modificar orden');
+$('.btn-submit').html('Actualizar');
+$('#modal-agregar').modal('show');
 
 });
 

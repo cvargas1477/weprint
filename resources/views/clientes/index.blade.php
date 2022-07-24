@@ -20,13 +20,14 @@
  					<thead>
  						<tr>
  							<th>Orden de trabajo</th>
+ 							<th>Vendedor</th>
  							<th>Rut </th>
  							<th>Razón social</th>
  							<th>Contacto</th>
  							<th>Celular </th>
  							<th>Email </th>
  							<th>Dirección </th>
- 							<th>Observación </th>
+ 							<th>Condición de pago </th>
  							<th>Fecha creación </th>
  							<th>Acciones </th>
  						</tr>
@@ -62,7 +63,16 @@
 	      	@csrf
 
 	      		<input type="hidden" name="id" class="id">	      		
-
+	      		<div class="mb-3">
+                    <label for="disenador" class="form-label">Asignar Vendedor</label>
+                    <select class="vendedor_asignado form-control" name="vendedor_asignado" id="vendedor_asignado">
+                        <option hidden>Elegir vendedor</option>                        
+                       	@foreach ($result2 as $vendedor)
+                        		<option value="{{ $vendedor->name }}" required>{{ $vendedor->name }}</option>
+                       	@endforeach	
+                       
+                    </select>
+                </div>
 		        <div class="form-group">
 		        	<label>Rut</label>
 		        	<input type="text" name="rut" class="rut form-control" required>
@@ -88,7 +98,7 @@
 		        	<input type="email" name="email" class="email form-control" required>
 		        </div>
 		        <div class="form-group">
-		        	<label>Observación</label>
+		        	<label>Condición de pago</label>
 		        	<input type="text" name="observacion" class="observacion form-control">
 		        </div>
 		        
@@ -142,6 +152,7 @@
 					<a href="${url_cotizacion}"   class="btn btn-success btn-sm"><i class="fa fa-book"></i></a>
 					`;
 				}},
+				{data:'vendedor_asignado'},
 				{data:'rut'},
 				{data:'razonsocial'},
 				{data:'contacto'},

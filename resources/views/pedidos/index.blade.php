@@ -18,6 +18,7 @@
  							<th>Historial</th>
  							<th>N° </th>
  							<th>Estado pedido </th>
+ 							<th>N° Cotización</th>
  							<th>Razon social</th>
  							<th>Contacto</th>
  							<th>Tamaño</th>
@@ -132,6 +133,7 @@
 					}},
 					{data:'norden'},
 					{data:'detalle'},
+					{data:'ncotizacion'},
 					{data:'razonsocial'},
 					{data:'contacto'},
 					{data:'tamano'},
