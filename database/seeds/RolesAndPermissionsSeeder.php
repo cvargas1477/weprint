@@ -89,6 +89,44 @@ class RolesAndPermissionsSeeder extends Seeder
 
         ],
 
+        'supervisorventas'=>[
+            'create servise',
+            'save service',
+            'edit servise',
+            'see servise',
+            'can delete servise',
+            'update servise',
+            'register user',
+            'delete client',
+            'edit client',
+            'edit all client',
+            'assign desing',
+            'change state',
+            'report',
+          
+
+
+        ],
+
+        'supervisortaller'=>[
+            'create servise',
+            'save service',
+            'edit servise',
+            'see servise',
+            'can delete servise',
+            'update servise',
+            'register user',
+            'delete client',
+            'edit client',
+            'edit all client',
+            'assign desing',
+            'change state',
+            'report',
+          
+
+
+        ],
+
         'administrador'=>[
             'create servise',
             'save service',
@@ -124,6 +162,8 @@ class RolesAndPermissionsSeeder extends Seeder
        $role_disenador->syncPermissions($permissions_by_role['disenador']);
        $role_taller->syncPermissions($permissions_by_role['taller']);
        $role_supervisor->syncPermissions($permissions_by_role['supervisor']);
+       $role_supervisorventas->syncPermissions($permissions_by_role['supervisorventas']);
+       $role_supervisortaller->syncPermissions($permissions_by_role['supervisortaller']);
 
 
     }

@@ -13,7 +13,7 @@
         <ul class="navbar-nav">            
             
             <li class="nav-item dropdown">
-                @hasrole('vendedor|supervisor|administrador')
+                @hasrole('vendedor|supervisor|supervisorventas|administrador')
                  <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown">Vendedor</a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                      <a class="dropdown-item" href="{{ route('cliente.index') }}">Clientes / Orden de trabajo </a>
@@ -23,21 +23,22 @@
                 @endhasrole 
             </li>
              <li class="nav-item dropdown">
-                @hasrole('disenador|supervisor|administrador')
+                @hasrole('disenador|supervisor|supervisorventas|administrador')
                  <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown">Diseño</a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    @hasrole('supervisor|administrador')
+                    @hasrole('supervisor|supervisorventas|administrador')
                      <a class="dropdown-item" href="{{ route('diseno.index') }}">Asignar diseñador</a>
                      @endhasrole
+                     @hasrole('disenador|supervisor|administrador')
                      <a class="dropdown-item" href="{{ route('archivodiseno.index') }}">Archivo diseñador</a>
-
+                     @endhasrole
                     <div class="dropdown-divider"></div>                 
                      
                 </div>
                 @endhasrole 
             </li>
             <li class="nav-item dropdown">
-                @hasrole('taller|supervisor|administrador')
+                @hasrole('taller|supervisor|supervisortaller|administrador')
                  <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown">Taller</a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">                     
                      
@@ -49,7 +50,7 @@
 
 
                     
-                     @hasrole('supervisor|administrador')
+                     @hasrole('supervisor|supervisortaller|administrador')
                      <a class="dropdown-item" href="{{ route('finalizarpedido.index')}}">Finalizar trabajos</a>
                      @endhasrole
 
@@ -62,7 +63,7 @@
              
             
             <li class="nav-item">
-                @hasrole('vendedor|disenador|taller|supervisor|administrador')
+                @hasrole('vendedor|disenador|taller|supervisor|supervisorventas|supervisortaller|administrador')
                 <a class="nav-link" href="{{ route('pedidos.index') }}" id="navbar" >Estado de pedidos</a>
                 @endhasrole
             </li> 
