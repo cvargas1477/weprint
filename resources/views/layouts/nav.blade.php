@@ -54,7 +54,11 @@
                      <a class="dropdown-item" href="{{ route('finalizarpedido.index')}}">Finalizar trabajos</a>
                      @endhasrole
 
-                    <div class="dropdown-divider"></div>                    
+                    <div class="dropdown-divider"></div> 
+
+                     @hasrole('administrador')
+                     <a class="dropdown-item" href="{{ route('pedidoanulado.index')}}">Anular pedido</a>
+                     @endhasrole                   
                      
                 </div>
                 @endhasrole

@@ -42,6 +42,7 @@ Route::resource('aceptadocliente', 'AceptadoclienteController')->middleware('aut
 Route::resource('impresion', 'ImpresionController')->middleware('auth');
 Route::resource('terminacion', 'TerminacionController')->middleware('auth');
 Route::resource('finalizarpedido', 'FinalizarpedidoController')->middleware('auth');
+Route::resource('pedidoanulado', 'PedidoanuladoController')->middleware('auth');
 
 #Pedidos
 Route::resource('pedidos', 'PedidoController')->middleware('auth');
